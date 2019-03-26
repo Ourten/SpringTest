@@ -1,0 +1,121 @@
+openapi: "3.0.0"
+info:
+  title: Spring Test API
+  version: 1.0.0
+paths:
+  /ratings/averages/{year}:
+    get:
+      summary: Get averages of titles for every categories in a specific year
+      parameters:
+        - in: path
+          name: year
+          schema:
+            type: integer
+          required: true
+          description: Numeric Year (YYYY) in which the title was created
+      responses:
+        '200':
+          description: List of Pair<Category, AverageRating>
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    -type: array
+                    items:
+                      type: object
+                      properties:
+                        category:
+                          type: string
+                          description: the specific category
+                        average:
+                          type: float
+                          description: the average rating of the category
+  /titles/casting/{title}:
+    get:
+      summary: Get all casting of a title
+      parameters:
+        - in: path
+          name: title
+          schema:
+            type: string
+          required: true
+          description: string primaryName or id of the title
+      responses:
+        '200':
+          description: List of cast entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    -type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: name of this cast member
+                        job:
+                          type: string
+                          description: job on the current title
+  /titles/tv/longest/{amount}:
+    get:
+      summary: Get longest TV Series
+      parameters:
+        - in: path
+          name: amount
+          schema:
+            type: int
+          required: true
+          description: int amount of series to return
+      responses:
+        '200':
+          description: List of series
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    -type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          description: name of this title
+                        job:
+                          type: long
+                          description: amount of episodes
+  /titles/tv/shortest/{amount}:
+    get:
+      summary: Get shortest TV Series
+      parameters:
+        - in: path
+          name: amount
+          schema:
+            type: int
+          required: true
+          description: int amount of series to return
+      responses:
+        '200':
+          description: List of series
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    -type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          description: name of this title
+                        job:
+                          type: long
+                          description: amount of episodes
